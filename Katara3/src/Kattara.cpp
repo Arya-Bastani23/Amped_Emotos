@@ -29,9 +29,11 @@ void Kattara::periodic() {
 
 //THIS IS A TEST BASE TO RUN WHEN YOU HAVE TEST CODE YOU NEED TO RUN
 void Kattara::kattaraTestOne() {
-    mc->sendRemThrottleCommand(1);
+    //mc->sendRemThrottleCommand(1);
+    Serial.println("one");
 }
 
 void Kattara::kattaraTestTwo() {
-    mc->sendRemThrottleCommand(0);
+    //mc->sendRemThrottleCommand(0);
+    Serial.println("two");
 }

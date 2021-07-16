@@ -13,7 +13,11 @@ INT8U output;
 void setup() {
   // put your setup code here, to run once:
   //output = katty->kattaraTest();
-  pinMode(LED_BUILTIN, OUTPUT);
+  //pinMode(LED_BUILTIN, OUTPUT);
+  SerialUSB.begin(9600); 
+  while(!SerialUSB);
+  SerialUSB.print("Hello World");
+
 
 }
 

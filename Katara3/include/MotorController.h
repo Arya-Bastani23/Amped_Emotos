@@ -22,8 +22,10 @@
             void disableMotor();
 
             void sendRemStateCommand(int command);
+            void sendRemSpeedComm(int speedPercent);
             void sendRemTorqueComm(int torquePercent);
             void sendRemThrottleCommand(int throttleVoltage);
+            void sendRemSpeedCommand(int speedPercent);
 
             void setRemMaxBrakeCurrent(int currentPercent);
             void setRemMaxMotoringCurrent(int currentPercent);

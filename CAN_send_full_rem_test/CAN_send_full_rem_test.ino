@@ -1,15 +1,43 @@
-#include <Arduino.h>
-#include <MotorController.h>
-#include <A_CAN.h>
+// CAN Send Example
+//
 
-MotorController::MotorController(A_CAN *canBus1) {
-    canBus = canBus1;
+#include <mcp_can.h>
+#include <SPI.h>
 
+MCP_CAN CAN0(3);  
+
+INT32U addy = 495;
+
+
+INT8U calcUpperIndex(INT32U address) {
+    //This equation was gained from the SDO documentation, and is the standard way to find the index
+    //from the address of a command
+    INT32U x = floor(address/64) + 8192;
+    //Now this value should on;y be a max of 16 bits long and we just want the upper index which will
+    //be in the second 8 bits so we need to bit shift right by 8
+    INT8U output = x >> 8;
+    //Now we only want to store the first byte and output that so we store the value in an INT8U
+    return output;
 }
-/** This will be used in order to write SDO messages to the motor controller, 
- *  it is the template that specific messages such as torque communication use.
- */
-void MotorController::SDOWrite(int numBytestoWrite, INT8U *data) {
+
+INT8U calcLowerIndex(INT32U address) {
+    //This equation was gained from the SDO documentation, and is the standard way to find the index
+    //from the address of a command
+    INT32U x = floor(address/64) + 8192;
+    //Now this value should on;y be a max of 16 bits long and we just want the upper index which will
+    //be in the second 8 bits so we need to bit shift right by 8
+    x = x << 24;
+    INT8U output = x >> 24;
+    //Now we only want to store the first byte and output that so we store the value in an INT8U
+    return output;
+}
+
+INT8U calcSubIndex(INT32U address) {
+    INT8U output = (address%64) + 1;
+    return output;
+}
+
+void SDOWrite(int numBytestoWrite, INT8U *data) {
     //
     INT32U canHeader;
     INT32U messageID = 0x600;
@@ -33,7 +61,7 @@ void MotorController::SDOWrite(int numBytestoWrite, INT8U *data) {
             command = 0x23;
     }
     data[0] = command;
-    byte sndStat = canBus->sendMessage(canHeader, rtr, length, data);
+    byte sndStat = CAN0.sendMsgBuf(canHeader, rtr, length, data);
 
     /** THIS PRINT STATEMENT SHOULD BE REMOVED EVENTUALLY!!!
      * WE JUST NEED IT NOW TO SEE IF THE BUS IS RUNNING CORRECTLY */
@@ -46,57 +74,7 @@ void MotorController::SDOWrite(int numBytestoWrite, INT8U *data) {
   }
  }
 
-void MotorController::SDORead(INT8U *data) {
-    INT32U canHeader;
-    INT32U messageID = 0x600;
-    INT32U nodeID = 0x2A;
-    canHeader = messageID + nodeID;
-    INT8U rtr = 0x0;
-    INT8U length = 0x8;
-    //Byte zero
-    INT8U command = 0x2B;
-    data[0] = command;
-    canBus->sendMessage(canHeader, rtr, length, data);
-}
-
-void MotorController::SDORErrorResponse(){
-
-}
-
-//This will enable the motor/motor controller to be on an ON state
-void MotorController::enableMotor() {
-    //To enable the motor all we need to do is send a remote state command with the value 2
-    sendRemStateCommand(2);
-}
-
-//This will set the motor/motor controller to an idle state
-void MotorController::idleMotor() {
-    //To enable the motor all we need to do is send a remote state command with the value 1
-    sendRemStateCommand(1);
-}
-
-//This will disable the motor/motor controller to be on an OFF state
-void MotorController::disableMotor() {
-    //To enable the motor all we need to do is send a remote state command with the value 0
-    sendRemStateCommand(0);
-}
-
-//The sends a remoteStateCommand
-void MotorController::sendRemStateCommand(int command) {
-    //For documented code look at the sendRemTorqueComm(int torquePercent) function
-    INT32U remStateCommAddress = 493;
-    INT8U *data = new INT8U[8];
-    data[1] = calcLowerIndex(remStateCommAddress);
-    data[2] = calcUpperIndex(remStateCommAddress);
-    data[3] = calcSubIndex(remStateCommAddress);
-    INT8U byteCommand = (INT8U) command;
-    data[4] = byteCommand;
-    SDOWrite(1, data);
-    delete data;
-}
-
-//The sends a remoteThrottleCommand
-void MotorController::sendRemThrottleCommand(int throttleVoltage) {
+ void sendRemThrottleCommand(int throttleVoltage) {
     //For documented code look at the sendRemTorqueComm(int torquePercent) function
     INT32U remThrottleCommAddress = 495;
     INT8U *data = new INT8U[8];
@@ -110,6 +88,19 @@ void MotorController::sendRemThrottleCommand(int throttleVoltage) {
     data[4] = lowerVoltage;
     data[5] = upperVoltage;
     SDOWrite(2, data);
+    delete data;
+}
+
+void sendRemStateCommand(int command) {
+    //For documented code look at the sendRemTorqueComm(int torquePercent) function
+    INT32U remStateCommAddress = 493;
+    INT8U *data = new INT8U[8];
+    data[1] = calcLowerIndex(remStateCommAddress);
+    data[2] = calcUpperIndex(remStateCommAddress);
+    data[3] = calcSubIndex(remStateCommAddress);
+    INT8U byteCommand = (INT8U) command;
+    data[4] = byteCommand;
+    SDOWrite(1, data);
     delete data;
 }
 
@@ -128,7 +119,7 @@ void MotorController::setControlCommandSource(int command) {
 }
 
 //This sends a message to set the new speed value as a percentage of the maximum possible torque
-void MotorController::sendRemSpeedComm(int speedPercent) {
+void MotorController::sendRemTorqueComm(int speedPercent) {
     //For documented code look at the sendRemTorqueComm(int torquePercent) function
     INT32U remSpeedCommAddress = 490;
     INT8U *data = new INT8U[8];
@@ -144,7 +135,6 @@ void MotorController::sendRemSpeedComm(int speedPercent) {
     SDOWrite(2, data);
     delete data;
 }
-
 
 //This sends a message to set the new torque value as a percentage of the maximum possible torque
 void MotorController::sendRemTorqueComm(int torquePercent) {
@@ -215,39 +205,32 @@ void MotorController::setRemMaxMotoringCurrent(int currentPercent) {
     delete data;
 }
 
+void setup()
+{
+  Serial.begin(115200);
 
+  // Initialize MCP2515 running at 16MHz with a baudrate of 500kb/s and the masks and filters disabled.
+  if(CAN0.begin(MCP_ANY, CAN_500KBPS, MCP_16MHZ) == CAN_OK) Serial.println("MCP2515 Initialized Successfully!");
+  else Serial.println("Error Initializing MCP2515...");
 
-
-//-----------------PRIVATE HELPER FUNCTIONS-----------------//
-
-
-
-INT8U MotorController::calcUpperIndex(INT32U address) {
-    //This equation was gained from the SDO documentation, and is the standard way to find the index
-    //from the address of a command
-    INT32U x = floor(address/64) + 8192;
-    //Now this value should on;y be a max of 16 bits long and we just want the upper index which will
-    //be in the second 8 bits so we need to bit shift right by 8
-    INT8U output = x >> 8;
-    //Now we only want to store the first byte and output that so we store the value in an INT8U
-    return output;
+  CAN0.setMode(MCP_NORMAL);   // Change to normal mode to allow messages to be transmitted
 }
 
-INT8U MotorController::calcLowerIndex(INT32U address) {
-    //This equation was gained from the SDO documentation, and is the standard way to find the index
-    //from the address of a command
-    INT32U x = floor(address/64) + 8192;
-    //Now this value should on;y be a max of 16 bits long and we just want the upper index which will
-    //be in the second 8 bits so we need to bit shift right by 8
-    x = x << 24;
-    INT8U output = x >> 24;
-    //Now we only want to store the first byte and output that so we store the value in an INT8U
-    return output;
+byte data[8] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07};
+
+void loop()
+{
+  //sendRemStateCommand(0);
+  sendRemTorqueComm(5);
+  sendRemSpeedCommand(10);
+
+  setRemMaxBrakeCurrent(100);
+  setRemMaxMotoringCurrent(50);
+  
+  
+  sendRemStateCommand(2);
+
 }
-
-INT8U MotorController::calcSubIndex(INT32U address) {
-    INT8U output = (address%64) + 1;
-    return output;
-}
-
-
+/*********************************************************************************************************
+  END FILE
+*********************************************************************************************************/

@@ -1,22 +1,32 @@
 #ifndef THROTTLE_h
 #define THROTTLE_h
     #include <Arduino.h>
-    #include <A_CAN.h>
+    #include <MotorController.h>
 
 class Throttle {
     private:
         long potentiometer_voltage;
         long outputSpeed;
+        long outputTorque;
         int CAN_ID;
-        int ADCPin;
+        int throttleADCPin;
+        int regenADCPin;
         int CSIPin;
-        long potVoltage;
+        long maxPotVoltage;
         int maxKPH;
-        A_CAN* canBus;
+        MotorController* mc;
+        //Constants
+        //max torque is 86 Nm
+        int maxTorque; 
+        //5000 rpm
+        int maxRPM; 
+
+        
+
 
     public:
-        Throttle(int CAN_ID1, int ADCPin1, long potVoltage1, 
-                 int maxKPH1, int CSIpin1, A_CAN* canBus1);
+        Throttle(int CAN_ID1, int throttleADCPin1, int regenADCPin1, long maxPotVoltage1, 
+                int maxKPH1, int CSIpin1, MotorController* mc1);
         //This will update all systems that rely on the throttle
         //So it will take in the curret potentiometer values, do math
         //to figure out the motor output speed, then send the proper values
@@ -29,8 +39,13 @@ class Throttle {
         // Take into account ABS & Traction Control
         void updateSpeed();
         // Not sure how we're gonna implement this 
-        void messageMotorController();
-
+        void updateMCSpeed();
+        //update torque given the velocity of the bike
+        void updateTorque();
+        //outputs the counteracting speed that the regen lever is exerting on the bike
+        long regenAntiSpeed();
+        //returns if the Regen braking is being used
+        bool isRegenOn();
 };
 
 #endif

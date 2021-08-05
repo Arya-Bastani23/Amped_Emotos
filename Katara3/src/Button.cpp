@@ -38,10 +38,18 @@ void Button::update() {
         if (reading != buttonState) {
         buttonState = reading;
 
-        // only toggle the bike mode if the new button state is HIGH
-        if (buttonState == HIGH) {
-            is_high = !is_high;
-        }
+            // only toggle the bike mode if the new button state is HIGH
+            if (buttonState == HIGH) {
+                is_high = HIGH;
+            } else {
+                is_high = LOW;
+            }
+
+            /** IF you want this to act like a switch replace the top if statement with
+             * if (buttonState == HIGH) {
+                is_high = !is_high;
+            }
+            */
         }
     }
 

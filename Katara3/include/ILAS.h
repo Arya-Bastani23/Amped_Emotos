@@ -2,6 +2,7 @@
 #define ILAS_h
     #include <Arduino.h>
     #include <Button.h>
+    #include <Servo.h>
 
 class ILAS {
     private:
@@ -12,6 +13,9 @@ class ILAS {
         int ILAS_UP_BUT_DIG_PIN;
         int ILAS_DOWN_BUT_DIG_PIN;
         int ILAS_SPEED;
+        int percent;
+
+        Servo* talon;
         Button* upButton;
         Button* downButton;
 

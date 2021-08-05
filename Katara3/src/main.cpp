@@ -7,20 +7,13 @@
  * the driver display we will do a conversion to display MPH instead of KPH
  */
 
-/**
+
 Kattara *katty = new Kattara();
 INT8U output;
 
 void setup() {
   // put your setup code here, to run once:
   //output = katty->kattaraTest();
-  //pinMode(LED_BUILTIN, OUTPUT);
-  SerialUSB.begin(9600); 
-  while(!SerialUSB);
-  SerialUSB.print("Hello World");
-  pinMode(LED_BUILTIN, OUTPUT);
-
-
 
 }
 
@@ -28,18 +21,15 @@ void loop() {
   // put your main code here, to run repeatedly:
   //katty->periodic();
   //Serial.println(katty->kattaraTest());
-  //katty->kattaraTestOne();
+  katty->kattaraTestOne();
   //delay(1000);
   //katty->kattaraTestTwo();
 
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(1000);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(1000);                       // wait for a second
-  
-}
-*/
 
+}
+
+
+/*
 void setup() {
 // put your setup code here, to run once:
 SerialUSB.begin(9600); 
@@ -55,3 +45,4 @@ delay(1000);                       // wait for a second
 digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
 delay(1000);
 }
+**/

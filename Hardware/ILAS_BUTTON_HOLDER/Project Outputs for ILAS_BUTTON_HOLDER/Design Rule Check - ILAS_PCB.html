@@ -1,0 +1,385 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD21\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">8/6/2021</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">11:47:32 AM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc" class="file"><acronym title="C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc">C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">15</td></tr>
+</table>
+</td>
+</table><a name="IDWJDGLHRFUFKQFQYJVM1VXFAUJIQJMXB5QLBBUSNAQS5FITA3UN1B"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDCPLMFLYPTYHXLH1FW1ELQ0EYJJJU4HTBWMAKVWOO2PL41IZ4SPBD">Clearance Constraint (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDEFPXXUKQSTZKJS3GLGHETYZBBMEHKFY5FXQ4NXOXOTXOOZN2WRAL">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDHW0QDLQQQGB43EFMGDOZFG5RGIWHDFLQRLBN1IXZMI1UDYB3ALP">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">2</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDUVAJZQDTCB1NLH5POMIBXWJLXCDZ1B0PY1S5VWN2JEGYR03QBRKM">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID4SOHUI1DZD2IEO1PGIFXNA4QEMLLBQF2ZZOZQGKUPTN55XQGNIHK">Width Constraint (Min=10mil) (Max=10mil) (Preferred=10mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDBITT3XNHXEADBRN1CE4JS0EODPQE4CDWLIW4JPI2KOSP3EQ5EUNB">Power Plane Connect Rule(Relief Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDQZEEJGMHQ15TO3XK0BFCFG3MOH1WLGBS4DDW1BOJZECAOWG1NJOB">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDX5FKH5WRBB01KPBGJ5N5PMGW5BH1DJFNRWNKBXLISLLTT34OKXC">Hole To Hole Clearance (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID3NZTNN22TEM4BFW20FKPUQNUULQDD5TVO53VGAJFIXGVEZJ2PQUI">Minimum Solder Mask Sliver (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDDHVCDL5NIYQ3NCXX5HCR13AHAIDVYOIPEQYJZFLD0KZA34VKYZZM">Silk To Solder Mask (Clearance=10mil) (IsPad),(All)</a></td>
+<td class="column2">8</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDFMJYCQ5CFEIAF4U0RY5AWR34VEVWC1RYHPJJHWNYG03RIXNCAJLJ">Silk to Silk (Clearance=10mil) (All),(All)</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDEPDRLIIBKCAEPVKQZXT1XJ1WKLY0VIGI1Y3PAJNND20HXGWQOBDN">Net Antennae (Tolerance=0mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDMZWB5P2LYM0NBNLMTWERBYI0RNSOMSKZD20VVKKTTCZGQO5KAC3I">Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">15</td>
+</tr>
+</table><br><a name="IDHW0QDLQQQGB43EFMGDOZFG5RGIWHDFLQRLBN1IXZMI1UDYB3ALP"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=902.5mil|Location2.X=1127.5mil|Location1.Y=1151.473mil|Location2.Y=1567.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=902.5mil|Location2.X=1127.5mil|Location1.Y=1151.473mil|Location2.Y=1567.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad Free-1(1015mil,1455mil) on Multi-Layer And Pad POW-2(1090mil,1185mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2212.5mil|Location2.X=2437.5mil|Location1.Y=1253.441mil|Location2.Y=1562.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2212.5mil|Location2.X=2437.5mil|Location1.Y=1253.441mil|Location2.Y=1562.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad R2-2(2275mil,1285mil) on Multi-Layer And Pad Free-3(2325mil,1450mil) on Multi-Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDQZEEJGMHQ15TO3XK0BFCFG3MOH1WLGBS4DDW1BOJZECAOWG1NJOB"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=901.875mil|Location2.X=1128.125mil|Location1.Y=1341.875mil|Location2.Y=1568.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=901.875mil|Location2.X=1128.125mil|Location1.Y=1341.875mil|Location2.Y=1568.125mil|Absolute=True">Hole Size Constraint: (225mil &gt; 100mil) Pad Free-1(1015mil,1455mil) on Multi-Layer Actual Hole Size = 225mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=901.875mil|Location2.X=1128.125mil|Location1.Y=906.875mil|Location2.Y=1133.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=901.875mil|Location2.X=1128.125mil|Location1.Y=906.875mil|Location2.Y=1133.125mil|Absolute=True">Hole Size Constraint: (225mil &gt; 100mil) Pad Free-2(1015mil,1020mil) on Multi-Layer Actual Hole Size = 225mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2211.875mil|Location2.X=2438.125mil|Location1.Y=1336.875mil|Location2.Y=1563.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2211.875mil|Location2.X=2438.125mil|Location1.Y=1336.875mil|Location2.Y=1563.125mil|Absolute=True">Hole Size Constraint: (225mil &gt; 100mil) Pad Free-3(2325mil,1450mil) on Multi-Layer Actual Hole Size = 225mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2211.875mil|Location2.X=2438.125mil|Location1.Y=906.875mil|Location2.Y=1133.125mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2211.875mil|Location2.X=2438.125mil|Location1.Y=906.875mil|Location2.Y=1133.125mil|Absolute=True">Hole Size Constraint: (225mil &gt; 100mil) Pad Free-4(2325mil,1020mil) on Multi-Layer Actual Hole Size = 225mil</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDDHVCDL5NIYQ3NCXX5HCR13AHAIDVYOIPEQYJZFLD0KZA34VKYZZM"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=10mil) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1621.692mil|Location2.X=1632.942mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1621.692mil|Location2.X=1632.942mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R1-1(1595mil,1285mil) on Multi-Layer And Track (1636mil,1285mil)(1645mil,1285mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1857.058mil|Location2.X=1868.308mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1857.058mil|Location2.X=1868.308mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R1-2(1895mil,1285mil) on Multi-Layer And Track (1845mil,1285mil)(1854mil,1285mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2001.692mil|Location2.X=2012.942mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2001.692mil|Location2.X=2012.942mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R2-1(1975mil,1285mil) on Multi-Layer And Track (2016mil,1285mil)(2025mil,1285mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2237.058mil|Location2.X=2248.308mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2237.058mil|Location2.X=2248.308mil|Location1.Y=1279.375mil|Location2.Y=1290.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R2-2(2275mil,1285mil) on Multi-Layer And Track (2225mil,1285mil)(2234mil,1285mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1631.692mil|Location2.X=1642.942mil|Location1.Y=1174.375mil|Location2.Y=1185.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1631.692mil|Location2.X=1642.942mil|Location1.Y=1174.375mil|Location2.Y=1185.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R3-1(1605mil,1180mil) on Multi-Layer And Track (1646mil,1180mil)(1655mil,1180mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1867.058mil|Location2.X=1878.308mil|Location1.Y=1174.375mil|Location2.Y=1185.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1867.058mil|Location2.X=1878.308mil|Location1.Y=1174.375mil|Location2.Y=1185.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R3-2(1905mil,1180mil) on Multi-Layer And Track (1855mil,1180mil)(1864mil,1180mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2006.692mil|Location2.X=2017.942mil|Location1.Y=1179.375mil|Location2.Y=1190.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2006.692mil|Location2.X=2017.942mil|Location1.Y=1179.375mil|Location2.Y=1190.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R4-1(1980mil,1185mil) on Multi-Layer And Track (2021mil,1185mil)(2030mil,1185mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2242.058mil|Location2.X=2253.308mil|Location1.Y=1179.375mil|Location2.Y=1190.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2242.058mil|Location2.X=2253.308mil|Location1.Y=1179.375mil|Location2.Y=1190.625mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.491mil &lt; 10mil) Between Pad R4-2(2280mil,1185mil) on Multi-Layer And Track (2230mil,1185mil)(2239mil,1185mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.491mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDFMJYCQ5CFEIAF4U0RY5AWR34VEVWC1RYHPJJHWNYG03RIXNCAJLJ"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk to Silk (Clearance=10mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1421.861mil|Location2.X=1433.111mil|Location1.Y=1079.365mil|Location2.Y=1090.615mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Arya_Bastani\Documents\Amped\Hardware\ILAS_BUTTON_HOLDER\ILAS_PCB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1421.861mil|Location2.X=1433.111mil|Location1.Y=1079.365mil|Location2.Y=1090.615mil|Absolute=True">Silk To Silk Clearance Constraint: (5.1mil &lt; 10mil) Between Text "DATA" (1435.036mil,1030.01mil) on Top Overlay And Text "DOW BUT" (1020.065mil,1025.01mil) on Top Overlay Silk Text to Silk Clearance [5.1mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>
